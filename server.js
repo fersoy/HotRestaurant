@@ -30,7 +30,7 @@ var reservations = [
         email: "patrick@gmail.com",
         phone: "713-555-5678"
     }
-  ];
+];
 
 
 app.get("/", function(req, res) {
@@ -43,6 +43,27 @@ app.get("/tables", function(req, res) {
 
 app.get("/reserve", function(req, res) {
     res.sendFile(path.join(__dirname, "reserve.html"));
+});
+
+
+// Displays all reservations
+app.get("/api/reservations", function(req, res) {
+    return res.json(reservations);
+});
+  
+// Displays a single character, or returns false
+app.get("/api/reservations/:reservation", function(req, res) {
+    var selected = req.params.reservation;
+  
+    console.log(selected);
+  
+    for (var i = 0; i < reservations.length; i++) {
+        if (selected === reservations[i].routeName) {
+            return res.json(reservations[i]);
+        }
+    }
+  
+    return res.json(false);
 });
 
 
